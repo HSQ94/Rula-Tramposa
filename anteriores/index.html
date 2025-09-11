@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juego Manipulado</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Ruleta Manipulada</h1>
+    <div id="roulette-container">
+      <div id="roulette"></div>
+      <div class="controls">
+        <button id="verde">Verde</button>
+        <button id="rojo">Rojo</button>
+        <button id="jugar">Jugar</button>
+      </div>
+      <div id="resultado"></div>
+      <div id="saldo">Saldo: $5000</div>
+    </div>
+    <div id="info-secreta">
+      <h2>Información secreta</h2>
+      <pre id="info-output">// Próximo tiro: ???</pre>
+    </div>
+  </div>
+  <div id="modal" class="hidden">
+    <div class="modal-content">
+      <p id="modal-text"></p>
+    </div>
+  </div>
+  <audio id="audio-giro" src="sounds/giro.mp3"></audio>
+  <audio id="audio-ganar" src="sounds/ganar.mp3"></audio>
+  <audio id="audio-perder" src="sounds/perder.mp3"></audio>
+  <script src="script.js"></script>
+</body>
+</html>
