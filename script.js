@@ -1,3 +1,5 @@
+//Variables del juego
+
 let userChoice = null;
 let saldo = 0;
 let tiro = 0;
@@ -15,17 +17,19 @@ window.addEventListener("load", () => {
     progress += 1;
     progressContainer.style.setProperty("--progress", progress + "%");
 
-   if (progress >= 100) {
-  clearInterval(interval);
+    if (progress >= 100) {
+      clearInterval(interval);
 
-  setTimeout(() => {
-      document.getElementById("loader-overlay").style.opacity = "0";
-    document.getElementById("loader-overlay").style.display = "none";
-    document.getElementById("age-check").style.display = "flex";
-  }, 500);
-}
+      setTimeout(() => {
+        document.getElementById("loader-overlay").style.opacity = "0";
+        document.getElementById("loader-overlay").style.display = "none";
+        document.getElementById("age-check").style.display = "flex";
+      }, 500);
+    }
   }, 30); // velocidad de llenado
 });
+
+//Verificación de edad
 function handleAge(isAdult) {
   document.getElementById("age-check").style.display = "none";
   document.getElementById("age-message").style.display = "flex";
@@ -43,6 +47,8 @@ function proceed() {
 
   document.getElementById("main-content").style.display = "block";
 }
+
+//UI
 const WINNING_SPINS = [2, 5, 8, 11, 12, 16, 21];
 const pointer = document.getElementById("pointer");
 const contenedorRuleta = document.getElementById("wrapperRuleta");
@@ -50,13 +56,19 @@ const roulette = document.getElementById('roulette');
 const prediction = document.getElementById('prediction');
 const saldoDisplay = document.getElementById('saldo');
 const playBtn = document.getElementById('play-btn');
+const modalOverlay = document.getElementById('modal-overlay');
 const modal = document.getElementById('result-modal');
+const colorModal = document.getElementById('color-modal');
+const colorModalContent = document.getElementsByClassName('colormodal-content')[0];
+const colorMessage = document.getElementById('color-message');
 const resultMsg = document.getElementById('result-message');
 const closeModal = document.getElementById('close-modal');
 
+//Sonidos
 const spinSound = document.getElementById('spin-sound');
 const winSound = document.getElementById('win-sound');
 const loseSound = document.getElementById('lose-sound');
+const clickSound = document.getElementById('click-sound');
 
 const introBox = document.getElementById('intro-box');
 const triviaBox = document.getElementById('trivia-box');
@@ -66,6 +78,29 @@ const goToGameBtn = document.getElementById('go-to-game');
 const rouletteControls = document.querySelector('.controls');
 const playBtnEl = document.getElementById('play-btn');
 
+//Mensajes aleatorios después de cada tirada
+const winMessages = [
+  "¡Le pegaste, muy bien!",
+  "¡Excelente tiro, estás cada vez mejor!",
+  "¡Muy buena, ya estás listo para el gran reto",
+  "¡Eso fue épico!",
+  "¡Ganaste como un campeón!"
+];
+
+const loseMessages = [
+  "¡Muy cerca! Vamos a intentarlo nuevamente.",
+  "Cerca, pero la próxima seguro es tuya!",
+  "Casi casi, dale otro intento",
+  "No pudo ser ¡Pero ya va a salir!",
+  "Ay, por muy poco ¡La próxima tiene que ser!"
+];
+
+function getRandomMessage(messagesArray) {
+  const index = Math.floor(Math.random() * messagesArray.length);
+  return messagesArray[index];
+}
+
+//Elección del color
 document.getElementById('choose-red').addEventListener('click', () => {
   userChoice = 'rojo';
   updatePrediction();
@@ -86,7 +121,7 @@ function updatePrediction() {
 function getNextOutcome() {
   console.log("es el tiro número: " + tiro.toString());
   if (tiro === 3) {
-    console.log("se muestr la info secreta");
+    console.log("se muestra la info secreta");
     document.getElementById('info-secreta').classList.add('visible');
   }
   const nextSpinWillWin = WINNING_SPINS.includes(tiro + 1);
@@ -114,96 +149,138 @@ function setPredictionText(text) {
   });
 }
 
-
+//Función botón JUGAR
 playBtn.addEventListener('click', () => {
-  if (!userChoice) {
-    alert("Elegí un color primero.");
-    return;
-  }
+  clickSound.play();
+  if (!userChoice) return alert("Elegí un color primero.");
 
-  // 🔒 Disable the button during spin
-  playBtn.disabled = true;
-  playBtn.classList.add('disabled'); // Optional: for styling
-  document.getElementById('choose-red').disabled = true;
-  document.getElementById('choose-red').classList.add('disabled');
-  document.getElementById('choose-green').disabled = true;
-  document.getElementById('choose-green').classList.add('disabled');
+  disableControls();
   saldo -= 1000;
-  saldoDisplay.textContent = `Saldo: $${saldo}`;
-  const anglePerSection = 12; // 360° / 36
-  let resultIndex = Math.floor(Math.random() * 36);
-  outcome = getNextOutcome();
+  updateSaldo();
 
-  const shouldWin = WINNING_SPINS.includes(tiro + 1);
-  if (shouldWin) {
-    // El jugador gana: manipular para que coincida con su elección
-    if (userChoice === 'rojo') {
-      while (resultIndex % 2 === 0) resultIndex = Math.floor(Math.random() * 36);
-    } else {
-      while (resultIndex % 2 !== 0) resultIndex = Math.floor(Math.random() * 36);
-    }
-  } else {
-    // El jugador pierde: lógica original (opuesta a su elección)
-    outcome = getNextOutcome();
-    if (outcome === 'rojo') {
-      while (resultIndex % 2 === 0) resultIndex = Math.floor(Math.random() * 36);
-    } else {
-      while (resultIndex % 2 !== 0) resultIndex = Math.floor(Math.random() * 36);
-    }
-  }
-
-
-
+  const anglePerSection = 12;
+  let resultIndex = getManipulatedResultIndex();
   const angle = 3600 + resultIndex * anglePerSection;
   currentAngle += angle;
+
   roulette.style.transform = `rotate(${currentAngle}deg)`;
-  contenedorRuleta.classList.remove('zoom'); // reiniciar si ya estaba
-  void roulette.offsetWidth; // forzar reflow para reiniciar animación
+  contenedorRuleta.classList.remove('zoom');
+  void roulette.offsetWidth;
   contenedorRuleta.classList.add('zoom');
   spinSound.play();
 
   setTimeout(() => {
-    if (tiro === 4) {
-      resultMsg.textContent = "¡Ganaste!";
+    const actualWin = tiro === 4
+      ? true
+      : WINNING_SPINS.includes(tiro + 1) || outcome === userChoice;
+
+    showResult(actualWin);
+    showColorModal(outcome);
+    tiro++;
+    outcome = getNextOutcome();
+    enableControls();
+  }, 3200);
+});
+
+function disableControls() {
+  playBtn.disabled = true;
+  playBtn.classList.add('disabled');
+  ['choose-red', 'choose-green'].forEach(id => {
+    const el = document.getElementById(id);
+    el.disabled = true;
+    el.classList.add('disabled');
+  });
+}
+
+function enableControls() {
+  playBtn.disabled = false;
+  playBtn.classList.remove('disabled');
+  ['choose-red', 'choose-green'].forEach(id => {
+    const el = document.getElementById(id);
+    el.disabled = false;
+    el.classList.remove('disabled');
+  });
+}
+
+function updateSaldo() {
+  saldoDisplay.textContent = `Saldo: $${saldo}`;
+}
+
+function getManipulatedResultIndex() {
+  let index = Math.floor(Math.random() * 36);
+  outcome = getNextOutcome();
+  const shouldWin = WINNING_SPINS.includes(tiro + 1);
+  const isRed = userChoice === 'rojo';
+
+  const matchParity = shouldWin ? isRed : !isRed;
+
+  while ((index % 2 === 0) !== matchParity) {
+    index = Math.floor(Math.random() * 36);
+  }
+
+  return index;
+}
+
+function showResult(win) {
+  if (tiro === 4) {
+    resultMsg.textContent = "¡Ganaste!";
+    winSound.play();
+    document.body.classList.add('flash-win');
+    setTimeout(() => document.body.classList.remove('flash-win'), 500);
+    setTimeout(() => {
+      if (getComputedStyle(colorModalContent).getPropertyValue('--colorFondo') !== "#e74c3c") {
+        colorModalContent.style.setProperty("--colorFondo", "#e74c3c");
+        colorMessage.textContent = `ROJO`;
+
+
+      } else {
+        colorModalContent.style.setProperty("--colorFondo", "#27ae60");
+        colorMessage.textContent = `VERDE`;
+
+
+      }
+
+
+      resultMsg.textContent = "Perdón... nos equivocamos. Perdiste.";
+      loseSound.play();
+    }, 2000);
+  } else {
+    resultMsg.textContent = win
+      ? getRandomMessage(winMessages)
+      : getRandomMessage(loseMessages);
+
+    if (win) {
+      saldo += 1500;
       winSound.play();
       document.body.classList.add('flash-win');
       setTimeout(() => document.body.classList.remove('flash-win'), 500);
-
-      setTimeout(() => {
-        resultMsg.textContent = "Perdón... nos equivocamos. Perdiste.";
-        loseSound.play();
-      }, 2000);
     } else {
-      //determinar si realmente ganó
-      const actualWin = shouldWin ? true : (outcome === userChoice);
-      resultMsg.textContent = actualWin ? "¡Le pegaste, muy bien!" : "¡Uy más suerte la próxima!";
-      if (actualWin) {
-        saldo += 1500;
-        winSound.play();
-        document.body.classList.add('flash-win');
-        setTimeout(() => document.body.classList.remove('flash-win'), 500);
-      } else {
-        loseSound.play();
-      }
-      saldoDisplay.textContent = `Saldo: $${saldo}`;
+      loseSound.play();
     }
+    updateSaldo();
+  }
 
-    modal.classList.remove('hidden');
-    outcome = getNextOutcome();
-    tiro++;
-    // ✅ Re-enable the button after spin completes
-    playBtn.disabled = false;
-    playBtn.classList.remove('disabled'); // Optional: for styling
-    document.getElementById('choose-red').disabled = false;
-    document.getElementById('choose-red').classList.remove('disabled');
-    document.getElementById('choose-green').disabled = false;
-    document.getElementById('choose-green').classList.remove('disabled');
-  }, 3200);
+  modal.classList.remove('hidden');
+}
 
-});
+function showColorModal(color) {
+  console.log("resultado recibido", color);
+  modalOverlay.classList.remove('hidden');
+  colorModal.classList.remove('hidden');
+  const fondo = color === 'rojo' ? '#e74c3c' : '#27ae60'; // rojo o verde
+  console.log("color de fondo asignado:", fondo);
+  colorModalContent.style.setProperty("--colorFondo", fondo);
+  colorMessage.textContent = `${color.toUpperCase()}`;
+}
+
+
 
 closeModal.addEventListener('click', () => {
+  clickSound.play();
+
+  modalOverlay.classList.add("hidden");
   modal.classList.add('hidden');
+  colorModal.classList.add('hidden');
 });
 
 // roulette.style.display = "none";
@@ -214,6 +291,8 @@ document.getElementById('info-secreta').style.display = "none";
 
 // Paso 1: Al presionar "Responder"
 document.getElementById('start-trivia').addEventListener('click', () => {
+  clickSound.play();
+
   triviaOn = true;
   introBox.classList.add('hidden');
   triviaBox.classList.remove('hidden');
@@ -222,13 +301,15 @@ document.getElementById('start-trivia').addEventListener('click', () => {
 // Paso 2: Elegir una respuesta
 document.querySelectorAll('.trivia-option').forEach(button => {
   button.addEventListener('click', () => {
-    if (triviaOn) {
-    const answer = button.textContent.trim();
-    triviaBox.classList.add('hidden');
-    triviaResult.classList.remove('hidden');
+    clickSound.play();
 
-    if (answer === 'Gonzalo Montiel') {
-      triviaFeedback.innerHTML = `
+    if (triviaOn) {
+      const answer = button.textContent.trim();
+      triviaBox.classList.add('hidden');
+      triviaResult.classList.remove('hidden');
+
+      if (answer === 'Gonzalo Montiel') {
+        triviaFeedback.innerHTML = `
   <strong>¡Felicitaciones!</strong> Acertaste la respuesta y te llevaste 
   <span class="saldo-positivo">$5000 de saldo</span> para apostar. 
   <br><br>
@@ -239,14 +320,16 @@ document.querySelectorAll('.trivia-option').forEach(button => {
   <br><br>
   <em>¡Dale al giro y que decida el destino!</em>
 `;
-      saldo += 5000;
-    } else {
-      triviaFeedback.textContent = "Incorrecto... pero tranqui igual te damos $5000 😉";
-      saldo += 5000;
-    }
+        saldo += 5000;
+      } else {
+        loseSound.play();
+        triviaFeedback.textContent = "Incorrecto... pero tranqui igual te damos $5000 😉";
+        saldo += 5000;
+      }
 
-    saldoDisplay.textContent = `Saldo: $${saldo}`;
-  }});
+      saldoDisplay.textContent = `Saldo: $${saldo}`;
+    }
+  });
 });
 
 // Paso 3: Al presionar "Ir a jugar"

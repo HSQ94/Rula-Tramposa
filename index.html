@@ -42,7 +42,7 @@
     <div class="container">
       <img src="Logo Rula.png" alt="Logo Ruleta del Azar" class="logo" />
       <div id="intro-box" class="card">
-        <h2>¿Querés girar la ruleta?</h2>
+        <h2>¿Estás listo para ganar?</h2>
         <p>Primero, respondé esta pregunta rápida.</p>
         <p>¡Si acertás, sumás saldo para jugar!</p>
 
@@ -66,7 +66,7 @@
       </div>
       <div id="contenedorRuleta" class="roulette-container">
         <div class="rayos-wrapper">
-        <img class="rayos-bg" src="Destello.png" alt="Rayos girando" />
+          <img class="rayos-bg" src="Destello.png" alt="Rayos girando" />
         </div>
         <div id="wrapperRuleta">
           <img id="roulette" src="Ruleta.png" alt="Ruleta" />
@@ -93,7 +93,12 @@
         </div>
       </div>
     </div>
-
+    <div id="modal-overlay" class="modal-overlay hidden"></div>
+    <div id="color-modal" class="colormodal hidden">
+      <div class="colormodal-content">
+        <p id="color-message"></p>
+      </div>
+    </div>
     <div id="result-modal" class="modal hidden">
       <div class="modal-content">
         <p id="result-message"></p>
@@ -104,6 +109,7 @@
     <audio id="spin-sound" src="sounds/spin.mp3" preload="auto"></audio>
     <audio id="win-sound" src="sounds/win.mp3" preload="auto"></audio>
     <audio id="lose-sound" src="sounds/lose.mp3" preload="auto"></audio>
+    <audio id="click-sound" src="sounds/Click.mp3" preload="auto"></audio>
 
     <script src="script.js"></script>
   </div>
