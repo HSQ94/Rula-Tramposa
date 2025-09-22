@@ -68,7 +68,7 @@ const closeModal = document.getElementById('close-modal');
 const spinSound = document.getElementById('spin-sound');
 const winSound = document.getElementById('win-sound');
 const loseSound = document.getElementById('lose-sound');
-const clickSound = document.getElementById('click-sound');
+const clickSound = document.getElementById('click-sound').cloneNode();
 
 const introBox = document.getElementById('intro-box');
 const triviaBox = document.getElementById('trivia-box');
