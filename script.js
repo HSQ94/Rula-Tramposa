@@ -1,5 +1,8 @@
 //Variables del juego
 
+console.log("Script loaded!");
+
+
 let userChoice = null;
 let saldo = 0;
 let tiro = 0;
@@ -7,11 +10,11 @@ let currentAngle = 0;
 let outcome = null;
 let triviaOn = false;
 //barra
-const progress = document.querySelector(".progress");
+const progress = document.querySelector(".my-progress");
 
 window.addEventListener("load", () => {
   let progress = 0;
-  const progressContainer = document.querySelector(".progress");
+  const progressContainer = document.querySelector(".my-progress");
 
   const interval = setInterval(() => {
     progress += 1;
@@ -35,8 +38,8 @@ function handleAge(isAdult) {
   document.getElementById("age-message").style.display = "flex";
 
   const message = isAdult
-    ? "¡Perfecto campeón, podés pasar a ganar!"
-    : "No te preocupes campeón, te guardamos el secreto 😉";
+    ? "¡Perfecto, podés pasar a ganar!"
+    : "No te preocupes, te guardamos el secreto 😉";
 
   document.getElementById("age-response-text").textContent = message;
 }
@@ -84,7 +87,7 @@ const winMessages = [
   "¡Excelente tiro, estás cada vez mejor!",
   "¡Muy buena, ya estás listo para el gran reto",
   "¡Eso fue épico!",
-  "¡Ganaste como un campeón!"
+  "¡Ganaste!"
 ];
 
 const loseMessages = [
@@ -134,13 +137,6 @@ function getNextOutcome() {
   return userChoice === 'rojo' ? 'verde' : 'rojo';
 }
 
-function isFibonacci(n) {
-  let a = 0, b = 1;
-  while (b < n) {
-    [a, b] = [b, a + b];
-  }
-  return b === n;
-}
 
 function setPredictionText(text) {
   const prediction = document.getElementById('prediction');
@@ -151,6 +147,14 @@ function setPredictionText(text) {
 
 //Función botón JUGAR
 playBtn.addEventListener('click', () => {
+  //Mensaje Final
+  if (saldo === 500) {
+    console.log("mostrar final")
+const wrapper = document.querySelector(".wrapperFinal");
+wrapper.style.display = "block";
+document.querySelector("container").style.display = "none";
+return
+  }
   clickSound.play();
   if (!userChoice) return alert("Elegí un color primero.");
 
@@ -309,6 +313,7 @@ document.querySelectorAll('.trivia-option').forEach(button => {
       triviaResult.classList.remove('hidden');
 
       if (answer === 'Gonzalo Montiel') {
+        winSound.play();
         triviaFeedback.innerHTML = `
   <strong>¡Felicitaciones!</strong> Acertaste la respuesta y te llevaste 
   <span class="saldo-positivo">$5000 de saldo</span> para apostar. 
@@ -320,13 +325,13 @@ document.querySelectorAll('.trivia-option').forEach(button => {
   <br><br>
   <em>¡Dale al giro y que decida el destino!</em>
 `;
-        saldo += 5000;
+
       } else {
         loseSound.play();
         triviaFeedback.textContent = "Incorrecto... pero tranqui igual te damos $5000 😉";
-        saldo += 5000;
-      }
 
+      }
+      saldo += 5000;
       saldoDisplay.textContent = `Saldo: $${saldo}`;
     }
   });
@@ -341,6 +346,35 @@ goToGameBtn.addEventListener('click', () => {
   playBtnEl.style.display = "inline-block";
   document.getElementById('info-secreta').style.display = "block";
 });
+
+let paso = 0;
+
+document.getElementById("Siguiente").addEventListener("click", () => {
+  const texto = document.getElementById("mensajeTexto");
+  document.getElementById("Siguiente").classList.remove("fade-in");
+  void document.getElementById("Siguiente").offsetWidth;
+  document.getElementById("Siguiente").classList.add("fade-in");
+
+  switch (paso) {
+    case 0:
+      texto.innerText = "Es un juego pensado como herramienta educativa para concientizar sobre cómo todo está programado.";
+      break;
+    case 1:
+      texto.innerText = "Mientras crees que estás jugando, el juego te manipula, te quita tu tiempo y dinero.";
+      break;
+    case 2:
+      texto.innerText = "Tené cuidado. No dejes que el juego juegue con vos.";
+      break;
+    default:
+      texto.innerText = "Es un mensaje del equipo de Casa Pueblo.";
+      document.getElementById("Siguiente").style.display = "none";
+      break;
+  }
+
+  paso++;
+
+});
+
 
 document.getElementById('choose-red').addEventListener('click', () => {
   userChoice = 'rojo';

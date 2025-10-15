@@ -21,10 +21,14 @@
   box-sizing: border-box;
 }
 
+.fadein {
+  animation: fade-in 2s;
+}
+
 body {
   margin: 0;
   font-family: 'Arial', sans-serif;
-  background: linear-gradient(to right, rgba(8, 12, 18), rgba(23, 31, 48), rgba(8, 12, 18));
+  background: linear-gradient(to right, #b4271d, #53150f, #b4271d);
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -40,14 +44,14 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(to right, rgba(8, 12, 18), rgba(23, 31, 48), rgba(8, 12, 18));
+  background: linear-gradient(to right, #b4271d, #53150f, #b4271d);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
 }
 
-.progress {
+.my-progress {
   /*Variables*/
   --progress: 50%;
   --color: #ffcc00;
@@ -60,13 +64,13 @@ body {
   border-radius: 3em;
 }
 
-.bar {
+.my-bar {
   background: grey;
   height: 100%;
   border-radius: 3em;
 }
 
-.progress-value {
+.my-progress-value {
 
   border-radius: 3rem;
   height: 100%;
@@ -83,7 +87,7 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(to right, rgba(8, 12, 18), rgba(23, 31, 48), rgba(8, 12, 18));
+  background: linear-gradient(to right, #b4271d, #53150f, #b4271d);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -111,7 +115,7 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(to right, rgba(8, 12, 18), rgba(23, 31, 48), rgba(8, 12, 18));
+  background: linear-gradient(to right, #b4271d, #53150f, #b4271d);
 
   display: flex;
   justify-content: center;
@@ -449,10 +453,14 @@ body {
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100dvh; /* mejor que 100vh en móviles */
-  background: rgba(0, 0, 0, 0.6); /* oscurecimiento con transparencia */
-  z-index: 9997; /* debajo del modal pero encima de todo lo demás */
+  height: 100dvh;
+  /* mejor que 100vh en móviles */
+  background: rgba(0, 0, 0, 0.6);
+  /* oscurecimiento con transparencia */
+  z-index: 9997;
+  /* debajo del modal pero encima de todo lo demás */
 }
+
 .color-modal {
   top: 10%;
   /* or bottom: 10% for lower */
@@ -481,7 +489,7 @@ body {
   z-index: 9998;
 }
 
-.modal {
+.custom-modal {
   position: absolute;
   top: 0;
   left: 0;
@@ -492,15 +500,16 @@ body {
   justify-content: center;
   z-index: 9999;
 }
+
 /*Resultado de color*/
 .colormodal-content {
-    --colorFondo: #ffcc00;
+  --colorFondo: #ffcc00;
   background: var(--colorFondo);
   padding: 20px;
   border-radius: 10px;
 }
 
-.modal-content {
+.mymodal-content {
   background: #222;
   padding: 20px;
   border-radius: 10px;
@@ -526,12 +535,51 @@ body {
   margin: 20px auto;
   max-width: 400px;
   text-align: center;
-  border: 3px solid #d2b109;
+  border: 3px solid darkslategray;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 20;
+}
+
+
+.wrapperFinal {
+  width: 100%;
+  z-index: 9999;
+  position: absolute;
+  height: 100vh;
+  animation: fade-down 1s ease-in-out;
+}
+
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+
+.finalCard {
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  background: rgba(235, 236, 237, 0.95);
+  color: #0f0f1c;
+  padding: 20px;
+  border-radius: 10px;
+  border: 3px solid darkslategray;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+  text-align: center;
+
 }
 
 #trivia-options button {
@@ -829,5 +877,31 @@ body {
 
   100% {
     transform: scale(1);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-10%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
   }
 }

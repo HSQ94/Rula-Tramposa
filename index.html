@@ -10,6 +10,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ruleta Manipulada</title>
   <link rel="stylesheet" href="styles.css" />
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -30,17 +33,16 @@
     </div>
   </div>
   <div id="loader-overlay">
-    <div class="progress">
-      <div class="bar">
-        <div class="progress-value"></div>
+    <div class="my-progress">
+      <div class="my-bar">
+        <div class="my-progress-value"></div>
       </div>
     </div>
   </div>
   <!-- Contenido principal -->
   <div id="main-content" style="display: none;">
-
     <div class="container">
-      <img src="Logo Rula.png" alt="Logo Ruleta del Azar" class="logo" />
+      <img src="LogoCaput.svg" alt="Logo Ruleta del Azar" class="logo" />
       <div id="intro-box" class="card">
         <h2>¿Estás listo para ganar?</h2>
         <p>Primero, respondé esta pregunta rápida.</p>
@@ -48,7 +50,7 @@
 
         <button class="amarillo" id="start-trivia">RESPONDER</button>
       </div>
-
+<!--TRIVIA-->
       <div id="trivia-box" class="card hidden">
         <p id="trivia-question">¿Quién hizo el gol definitivo en la tanda de penales que consagró campeón a
           Argentina en la final del Mundial 2022?</p>
@@ -64,7 +66,17 @@
         <p id="trivia-feedback"></p>
         <button class="amarillo" id="go-to-game">IR A JUGAR</button>
       </div>
+      <!--CONTENEDOR RULETA-->
       <div id="contenedorRuleta" class="roulette-container">
+        <!--MODAL FINAL-->
+    <div class="wrapperFinal" style="display: none;">
+      <div class="finalCard" id="mensajeFinal">
+        <p id="mensajeTexto">
+          Estás por quedarte sin saldo.<br> No sería prudente pedirle dinero prestado a nadie.</p>
+        <button class="amarillo fadein" id="Siguiente">Siguiente</button>
+      </div>
+    </div>
+    <!--VISUAL RULETA-->
         <div class="rayos-wrapper">
           <img class="rayos-bg" src="Destello.png" alt="Rayos girando" />
         </div>
@@ -75,6 +87,7 @@
         </div>
         <div id="pointer"></div>
       </div>
+      <!--CONTROLES JUEGO-->
       <div class="controls">
         <button id="choose-red" class="boton rojo">ROJO</button>
         <button id="choose-green" class="boton verde">VERDE</button>
@@ -99,19 +112,22 @@
         <p id="color-message"></p>
       </div>
     </div>
-    <div id="result-modal" class="modal hidden">
-      <div class="modal-content">
+    <div id="result-modal" class="custom-modal hidden">
+      <div class="mymodal-content">
         <p id="result-message"></p>
         <button id="close-modal" class="amarillo verysmall">Cerrar</button>
       </div>
     </div>
 
+
+    <!-- Button trigger modal -->
+
     <audio id="spin-sound" src="sounds/spin.mp3" preload="auto"></audio>
     <audio id="win-sound" src="sounds/win.mp3" preload="auto"></audio>
-    <audio id="lose-sound" src="sounds/lose.mp3" preload="auto"></audio>
+    <audio id="lose-sound" src="sounds/perder.mp3" preload="auto"></audio>
     <audio id="click-sound" src="sounds/Click.mp3" preload="auto"></audio>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
   </div>
 </body>
 
