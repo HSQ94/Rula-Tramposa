@@ -148,14 +148,14 @@ function setPredictionText(text) {
 //Función botón JUGAR
 playBtn.addEventListener('click', () => {
   //Mensaje Final
-  if (saldo === 500) {
+
+  if (saldo === 500) /*aumentar para debuggear el final rápido*/ {
     console.log("mostrar final")
 const wrapper = document.querySelector(".wrapperFinal");
 wrapper.style.display = "block";
 document.querySelector("container").style.display = "none";
 return
   }
-  clickSound.play();
   if (!userChoice) return alert("Elegí un color primero.");
 
   disableControls();
@@ -350,6 +350,7 @@ goToGameBtn.addEventListener('click', () => {
 let paso = 0;
 
 document.getElementById("Siguiente").addEventListener("click", () => {
+  clickSound.play();
   const texto = document.getElementById("mensajeTexto");
   document.getElementById("Siguiente").classList.remove("fade-in");
   void document.getElementById("Siguiente").offsetWidth;
@@ -366,7 +367,8 @@ document.getElementById("Siguiente").addEventListener("click", () => {
       texto.innerText = "Tené cuidado. No dejes que el juego juegue con vos.";
       break;
     default:
-      texto.innerText = "Es un mensaje del equipo de Casa Pueblo.";
+      texto.innerText = "Es un mensaje del equipo de:";
+      document.getElementById("logoCasa").style.display = "block";
       document.getElementById("Siguiente").style.display = "none";
       break;
   }

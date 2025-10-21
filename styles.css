@@ -25,6 +25,10 @@
   animation: fade-in 2s;
 }
 
+.fadeinrapido {
+animation: fade-in 1s;
+}
+
 body {
   margin: 0;
   font-family: 'Arial', sans-serif;
@@ -179,6 +183,17 @@ body {
   border-radius: 5px;
 }
 
+#logoCasa {
+   width: 150px;
+  height: auto;
+  display: inline-block; /* or block */
+  margin: 0 auto;
+  align-items: center;
+}
+
+#logoCasa:hover {
+  transform: scale(1.05);
+}
 
 .boton.verde:hover {
   color: white;
@@ -525,6 +540,7 @@ body {
 }
 
 .card {
+  box-shadow: 0 0 10px #aaa;
   font-family: "Montserrat", sans-serif;
   font-weight: bold;
   background: rgba(235, 236, 237, 0.95);
@@ -563,15 +579,18 @@ body {
 
 
 .finalCard {
+  box-shadow: 0 0 10px #aaa;
   font-family: "Montserrat", sans-serif;
   font-weight: bold;
   background: rgba(235, 236, 237, 0.95);
   color: #0f0f1c;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
   border-radius: 10px;
   border: 3px solid darkslategray;
   position: absolute;
-  top: 50%;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 9999;
