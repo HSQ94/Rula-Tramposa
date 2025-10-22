@@ -26,13 +26,13 @@
 }
 
 .fadeinrapido {
-animation: fade-in 1s;
+  animation: fade-in 1s;
 }
 
 body {
   margin: 0;
   font-family: 'Arial', sans-serif;
-  background: linear-gradient(to right, #b4271d, #53150f, #b4271d);
+  background: linear-gradient(to right, #b4271d, #641912, #390e0a, #641912, #b4271d);
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -48,7 +48,7 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(to right, #b4271d, #53150f, #b4271d);
+  background: linear-gradient(to right, #b4271d, #641912, #390e0a, #641912, #b4271d);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -91,7 +91,7 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(to right, #b4271d, #53150f, #b4271d);
+  background: linear-gradient(to right, #b4271d, #641912, #390e0a, #641912, #b4271d);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -119,7 +119,7 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(to right, #b4271d, #53150f, #b4271d);
+  background: linear-gradient(to right, #b4271d, #641912, #390e0a, #641912, #b4271d);
 
   display: flex;
   justify-content: center;
@@ -184,9 +184,10 @@ body {
 }
 
 #logoCasa {
-   width: 150px;
+  width: 150px;
   height: auto;
-  display: inline-block; /* or block */
+  display: inline-block;
+  /* or block */
   margin: 0 auto;
   align-items: center;
 }
@@ -257,23 +258,23 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 100%;
-  height: 100%;
+  width: 200%;
+  height: 200%;
   overflow: hidden;
   transform: translate(-50%, -50%);
   z-index: -5;
   pointer-events: none;
-  /* Fade mask */
-  mask-image: radial-gradient(circle, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 100%);
+  mask-image: radial-gradient(circle, rgba(0, 0, 0, 1) 00%, rgba(0, 0, 0, 0) 100%);
   mask-repeat: no-repeat;
   mask-position: center;
   mask-size: cover;
-}
+  opacity: 30%;
 
+}
 
 .rayos-bg {
   position: absolute;
-  opacity: 20%;
+  opacity: 25%;
   top: 60%;
   left: 50%;
   width: 200%;
@@ -285,9 +286,6 @@ body {
   z-index: -5;
 }
 
-.result-message {
-  animation: pulseText 1.2s infinite;
-}
 
 #roulette {
   position: relative;
@@ -359,6 +357,11 @@ body {
   color: white;
   box-shadow: 0 0 15px currentColor;
   border-color: currentColor;
+}
+
+#color-message {
+  transform: scale(1.5);
+    animation: pulseText 1.2s ease-in-out;
 }
 
 .amarillo {
@@ -522,7 +525,9 @@ body {
   background: var(--colorFondo);
   padding: 20px;
   border-radius: 10px;
+  font-family: 'bebas kai';
 }
+
 
 .mymodal-content {
   background: #222;
@@ -623,31 +628,17 @@ body {
   }
 }
 
-/*.saldo-positivo {
-  color: #42ff75;
-  font-weight: bold;
-}
-
-.instruccion {
-  color: #f0c674;
-  font-weight: bold;
-}
-
-.detalle {
-  color: #aaa;
-}
-*/
 @keyframes pulseText {
 
   0%,
   100% {
-    transform: scale(1);
+    transform: scale(1.5);
     opacity: 1;
 
   }
 
-  50% {
-    transform: scale(1.1);
+  15% {
+    transform: scale(1.7);
     opacity: 0.8;
   }
 }

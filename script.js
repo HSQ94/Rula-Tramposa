@@ -151,10 +151,10 @@ playBtn.addEventListener('click', () => {
 
   if (saldo === 500) /*aumentar para debuggear el final rápido*/ {
     console.log("mostrar final")
-const wrapper = document.querySelector(".wrapperFinal");
-wrapper.style.display = "block";
-document.querySelector("container").style.display = "none";
-return
+    const wrapper = document.querySelector(".wrapperFinal");
+    wrapper.style.display = "block";
+    document.querySelector("container").style.display = "none";
+    return
   }
   if (!userChoice) return alert("Elegí un color primero.");
 
@@ -227,7 +227,9 @@ function getManipulatedResultIndex() {
 
 function showResult(win) {
   if (tiro === 4) {
+
     resultMsg.textContent = "¡Ganaste!";
+    document.getElementById("close-modal").style.display = "none";
     winSound.play();
     document.body.classList.add('flash-win');
     setTimeout(() => document.body.classList.remove('flash-win'), 500);
@@ -244,7 +246,7 @@ function showResult(win) {
 
       }
 
-
+      document.getElementById("close-modal").style.display = "";
       resultMsg.textContent = "Perdón... nos equivocamos. Perdiste.";
       loseSound.play();
     }, 2000);
