@@ -2,18 +2,21 @@
   font-family: 'BebasKai';
   src: url('fonts/BebasKai.otf') format('opentype');
   font-weight: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'BebasNeueBold';
   src: url('fonts/BebasNeue Bold.ttf') format('truetype');
   font-weight: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'JetBrainsMonoNLRegular';
   src: url('fonts/jetbrains-mono-nl-regular.ttf') format('truetype');
   font-weight: normal;
+  font-display: swap;
 }
 
 /* A ver si lo hacemos responsive */
@@ -361,7 +364,7 @@ body {
 
 #color-message {
   transform: scale(1.5);
-    animation: pulseText 1.2s ease-in-out;
+  animation: pulseText 1.2s ease-in-out;
 }
 
 .amarillo {
@@ -525,7 +528,7 @@ body {
   background: var(--colorFondo);
   padding: 20px;
   border-radius: 10px;
-  font-family: 'bebas kai';
+  font-family: 'BebasNeueBold';
 }
 
 
