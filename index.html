@@ -17,7 +17,7 @@
 
 <body>
   <!-- Verificación de edad -->
-  <div  id="age-check" style="display: none;">
+  <div id="age-check" style="display: none;">
     <div class="card fadeinrapido">
       <p>¿Sos mayor de 18 años?</p>
       <button class="amarillo verysmall trivia-option" onclick="handleAge(true)">Sí</button>
@@ -50,7 +50,7 @@
 
         <button class="amarillo" id="start-trivia">RESPONDER</button>
       </div>
-<!--TRIVIA-->
+      <!--TRIVIA-->
       <div id="trivia-box" class="card hidden">
         <p id="trivia-question">¿Quién hizo el gol definitivo en la tanda de penales que consagró campeón a
           Argentina en la final del Mundial 2022?</p>
@@ -69,18 +69,21 @@
       <!--CONTENEDOR RULETA-->
       <div id="contenedorRuleta" class="roulette-container">
         <!--MODAL FINAL-->
-    <div class="wrapperFinal" style="display: none;">
-      <div class="finalCard" id="mensajeFinal">
-        <p id="mensajeTexto">
-          Estás por quedarte sin saldo.<br> No sería prudente pedirle dinero prestado a nadie.</p>
-<a href="https://www.instagram.com/casapuebloarg" target="_blank" rel="noopener noreferrer">
-  <img class="fadeinrapido" style="display: none;" id="logoCasa" src="logoCasaPueblo.png" alt="logo casapueblo">
-</a>
+        <div class="wrapperFinal" style="display: none;">
+          <div class="finalCard" id="mensajeFinal">
+            <p id="mensajeTexto">
+              Estás por quedarte sin saldo.<br> No sería prudente pedirle dinero prestado a nadie.</p>
+            <a href="https://www.instagram.com/casapuebloarg" target="_blank" rel="noopener noreferrer">
+              <img class="fadeinrapido" style="display: none;" id="logoCasa" src="logoCasaPueblo.png"
+                alt="logo casapueblo">
+              <button class="amarillo reload" style="display: none;" id="reload">Volver a empezar</button>
 
-        <button class="amarillo fadein" id="Siguiente">Siguiente</button>
-      </div>
-    </div>
-    <!--VISUAL RULETA-->
+            </a>
+
+            <button class="amarillo fadein" id="Siguiente">Siguiente</button>
+          </div>
+        </div>
+        <!--VISUAL RULETA-->
         <div class="rayos-wrapper">
           <img class="rayos-bg" src="Destello.png" alt="Rayos girando" />
         </div>
@@ -96,7 +99,8 @@
         <button id="choose-red" class="boton rojo">ROJO</button>
         <button id="choose-green" class="boton verde">VERDE</button>
       </div>
-      <button class="amarillo" id="play-btn">JUGAR</button>
+      <button class="amarillo hidden" id="play-btn">JUGAR</button>
+
       <p id="saldo" class="saldo">Saldo: $5000</p>
       <div id="info-secreta" class="hidden collapsible">
         <h3 class="collapsible-header">Información secreta ▼</h3>

@@ -379,6 +379,12 @@ body {
   border-radius: 5px;
 }
 
+.reload {
+  display: inline-block;
+  font-size: 1.8rem;
+  margin: 1rem;
+}
+
 .amarillo.small {
   font-size: 2rem;
 }

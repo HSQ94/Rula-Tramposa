@@ -2,7 +2,7 @@
 
 console.log("Script loaded!");
 
-
+let = saldoInicial = 5000;
 let userChoice = null;
 let saldo = 0;
 let tiro = 0;
@@ -98,6 +98,10 @@ const loseMessages = [
   "Ay, por muy poco ¡La próxima tiene que ser!"
 ];
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function getRandomMessage(messagesArray) {
   const index = Math.floor(Math.random() * messagesArray.length);
   return messagesArray[index];
@@ -150,6 +154,7 @@ playBtn.addEventListener('click', () => {
   //Mensaje Final
 
   if (saldo === 500) /*aumentar para debuggear el final rápido*/ {
+    playBtnEl.style.display = "none";
     console.log("mostrar final")
     const wrapper = document.querySelector(".wrapperFinal");
     wrapper.style.display = "block";
@@ -333,7 +338,8 @@ document.querySelectorAll('.trivia-option').forEach(button => {
         triviaFeedback.textContent = "Incorrecto... pero tranqui igual te damos $5000 😉";
 
       }
-      saldo += 5000;
+      //Carga del saldo al inicio
+      saldo += saldoInicial;
       saldoDisplay.textContent = `Saldo: $${saldo}`;
     }
   });
@@ -358,20 +364,27 @@ document.getElementById("Siguiente").addEventListener("click", () => {
   void document.getElementById("Siguiente").offsetWidth;
   document.getElementById("Siguiente").classList.add("fade-in");
 
+
+
   switch (paso) {
     case 0:
-      texto.innerText = "Es un juego pensado como herramienta educativa para concientizar sobre cómo todo está programado.";
+      texto.innerText = "Este es un juego pensado como herramienta educativa para concientizar sobre la programación de los casinos digitales.";
       break;
     case 1:
-      texto.innerText = "Mientras crees que estás jugando, el juego te manipula, te quita tu tiempo y dinero.";
+      texto.innerText = "Mientras crees que estás jugando, la plataforma te manipula y te quita tu dinero.";
       break;
     case 2:
-      texto.innerText = "Tené cuidado. No dejes que el juego juegue con vos.";
+      texto.innerText = "No dejes que jueguen con vos.";
       break;
     default:
       texto.innerText = "Es un mensaje del equipo de:";
       document.getElementById("logoCasa").style.display = "block";
       document.getElementById("Siguiente").style.display = "none";
+      document.getElementById("reload").classList.remove("fade-in");
+      void document.getElementById("reload").offsetWidth;
+      document.getElementById("reload").classList.add("fade-in");
+      document.getElementById("reload").style.display = "inline-block";
+
       break;
   }
 
@@ -379,6 +392,15 @@ document.getElementById("Siguiente").addEventListener("click", () => {
 
 });
 
+//Función de recarga de la página
+document.getElementById("reload").addEventListener("click", async () => {
+  clickSound.play();
+  const texto = document.getElementById("mensajeTexto");
+  texto.innerText = "Ah parece que no se entendió el mensaje, vamos de nuevo...";
+
+  await sleep(2000); // wait 2 seconds
+  location.reload();
+});
 
 document.getElementById('choose-red').addEventListener('click', () => {
   userChoice = 'rojo';
